@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+        }
+        body{
+            background-color: blueviolet;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        section{
+            background-color: white;
+            width: 400px;
+            padding: 10px;
+            
+        }
+        input{
+            padding: 10px;
+            margin-left: 10px;
+            width: 250px;
+            font-size: 15px;
+        }
+        button{
+            padding: 10px;
+            width: 100px;
+            margin-left: -5px;
+            font-size: 15px;
+        }
+        .data{
+            text-align: center;
+
+        }
+    </style>
+</head>
+<body>
+    <section>
+        <input type="text" placeholder="enter location">
+        <button>Get data</button>
+        <div class="data">
+            <img src="https://cdn.pixabay.com/photo/2012/04/18/13/55/clouds-37095__340.png" width="100px">
+       
+        <h1><span id="tem">25</span>&deg;c</h1>
+        <h3>cloud</h3>
+        <h2>hyderbad</h2>
+    </div>
+    </section>
+    
+    <script>
+        let input=document.querySelector('input');
+        let btn=document.querySelector('button')
+        let tem=document.querySelector('span')
+        let des=document.querySelector('h3')
+        let loc=document.querySelector('h2')
+
+        let apikey='d74309a93a3fac88edce2c787495990d'
+        btn.onclick= function(){
+            if(input.value === ''){
+                alert('enter valid location')
+            }else{
+                let url=`https://api.openweathermap.org/data/2.5/weather?q=${input.value}&appid=${apikey}`
+                fetch(url).then(response=>response.json()).then(result=>{
+                    // console.log(result)
+                    let {name}=result
+                    let {temp}=result.main
+                    let {description}=result.weather[0]
+                    console.log(name,temp,description)
+
+                    tem.innerHTML=Math.round(temp-273)
+                    loc.innerText=name
+                    des.innerHTML=description
+
+
+
+                })
+            }
+        }
+    </script>
+</body>
+</html>
